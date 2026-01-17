@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IEMS | Authentication</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="center">
+
+<div class="card">
+  <h2>IEMS System</h2>
+
+  <!-- Login -->
+  <div id="loginBox">
+    <input id="loginId" placeholder="ID No">
+    <input id="loginPass" type="password" placeholder="Password">
+    <select id="loginRole">
+      <option value="student">Student</option>
+      <option value="teacher">Teacher</option>
+      <option value="staff">Staff</option>
+    </select>
+    <button onclick="login()">Login</button>
+    <p onclick="showSignup()">Signup</p>
+    <p onclick="showForgot()">Forgot Password</p>
+  </div>
+
+  <!-- Signup -->
+  <div id="signupBox" class="hidden">
+    <input id="sName" placeholder="Full Name">
+    <input id="sId" placeholder="ID No">
+    <input id="sPhone" placeholder="Phone No">
+    <input id="sEmail" placeholder="Email">
+    <input id="sPass" type="password" placeholder="Password">
+    <select id="sRole">
+      <option value="student">Student</option>
+      <option value="teacher">Teacher</option>
+      <option value="staff">Staff</option>
+    </select>
+    <button onclick="signup()">Signup</button>
+    <p onclick="showLogin()">Back to Login</p>
+  </div>
+
+  <!-- Forgot -->
+  <div id="forgotBox" class="hidden">
+    <input id="fName" placeholder="Name">
+    <input id="fId" placeholder="ID No">
+    <button onclick="forgot()">Recover</button>
+    <p onclick="showLogin()">Back to Login</p>
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+</body>
+</html>
