@@ -1,0 +1,64 @@
+* {
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f1f5f9;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  width: 320px;
+  border-radius: 10px;
+}
+
+input, select, button {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+}
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.hidden { display: none; }
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+aside {
+  width: 220px;
+  background: #0f172a;
+  color: white;
+  padding: 20px;
+}
+
+aside button {
+  background: red;
+}
+
+nav button {
+  display: block;
+  margin: 6px 0;
+}
+
+main {
+  flex: 1;
+  padding: 20px;
+}
