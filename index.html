@@ -2,53 +2,557 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>IEMS | Authentication</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IEMS - Integrated Education Management System</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #a8322d 0%, #3b4371 50%, #764ba2 100%);
+      opacity: 0;
+      animation: gradientShift 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes gradientShift {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      width: 450px;
+      max-width: 95%;
+      padding: 50px 40px;
+    }
+
+    .logo-placeholder {
+      width: 150px;
+      height: 150px;
+      border: 3px solid #764ba2;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 30px;
+      background: #f8f9ff;
+    }
+
+    .logo-placeholder .logo-text {
+      font-size: 32px;
+      font-weight: bold;
+      color: #764ba2;
+      letter-spacing: 2px;
+    }
+
+    .logo-placeholder .logo-subtitle {
+      font-size: 10px;
+      color: #666;
+      margin-top: 5px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #a8322d;
+      font-size: 28px;
+      margin-bottom: 30px;
+      text-align: center;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: #a8322d;
+    }
+
+    .form-group {
+      margin: 20px 0;
+    }
+
+    label {
+      display: block;
+      color: #555;
+      font-size: 14px;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      background: #f9f9f9;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #764ba2;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: auto;
+      margin-right: 8px;
+    }
+
+    .checkbox-group label {
+      margin: 0;
+      font-size: 13px;
+      color: #666;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #a8322d 0%, #3b4371 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(168, 50, 45, 0.4);
+    }
+
+    .links {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .links a {
+      color: #764ba2;
+      text-decoration: none;
+      font-size: 14px;
+      margin: 0 10px;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .links a:hover {
+      color: #a8322d;
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 12px;
+      text-align: center;
+      z-index: 2;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        width: 90%;
+        padding: 40px 30px;
+      }
+
+      .logo-placeholder {
+        width: 120px;
+        height: 120px;
+      }
+
+      .logo-placeholder .logo-text {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
 </head>
-<body class="center">
+<body>
 
-<div class="card">
-  <h2>IEMS System</h2>
+<div class="container">
+  <div class="logo-placeholder">
+    <div class="logo-text">IEMS</div>
+    <div class="logo-subtitle">Integrated Education Management System</div>
+  </div>
 
-  <!-- Login -->
+  <!-- Login Form -->
   <div id="loginBox">
-    <input id="loginId" placeholder="ID No">
-    <input id="loginPass" type="password" placeholder="Password">
-    <select id="loginRole">
-      <option value="student">Student</option>
-      <option value="teacher">Teacher</option>
-      <option value="staff">Staff</option>
-    </select>
-    <button onclick="login()">Login</button>
-    <p onclick="showSignup()">Signup</p>
-    <p onclick="showForgot()">Forgot Password</p>
+    <h2>Sign In</h2>
+    <div class="form-group">
+      <label for="loginId">Login ID</label>
+      <input type="text" id="loginId" placeholder="Enter your ID">
+    </div>
+    <div class="form-group">
+      <label for="loginPass">Password</label>
+      <input type="password" id="loginPass" placeholder="Enter your password">
+    </div>
+    <div class="form-group">
+      <label for="loginRole">Role</label>
+      <select id="loginRole">
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
+        <option value="staff">Staff</option>
+      </select>
+    </div>
+    <div class="checkbox-group">
+      <input type="checkbox" id="remember">
+      <label for="remember">Remember Me</label>
+    </div>
+    <button onclick="login()">Sign In</button>
+    <div class="links">
+      <a onclick="showSignup()">Sign Up</a>
+      <a onclick="showForgot()">Forgot Password?</a>
+    </div>
   </div>
 
-  <!-- Signup -->
+  <!-- Signup Form -->
   <div id="signupBox" class="hidden">
-    <input id="sName" placeholder="Full Name">
-    <input id="sId" placeholder="ID No">
-    <input id="sPhone" placeholder="Phone No">
-    <input id="sEmail" placeholder="Email">
-    <input id="sPass" type="password" placeholder="Password">
-    <select id="sRole">
-      <option value="student">Student</option>
-      <option value="teacher">Teacher</option>
-      <option value="staff">Staff</option>
-    </select>
-    <button onclick="signup()">Signup</button>
-    <p onclick="showLogin()">Back to Login</p>
+    <h2>Sign Up</h2>
+    <div class="form-group">
+      <label for="sName">Full Name</label>
+      <input type="text" id="sName" placeholder="Enter your full name">
+    </div>
+    <div class="form-group">
+      <label for="sId">ID Number</label>
+      <input type="text" id="sId" placeholder="Enter your ID">
+    </div>
+    <div class="form-group">
+      <label for="sPhone">Phone Number</label>
+      <input type="tel" id="sPhone" placeholder="Enter your phone">
+    </div>
+    <div class="form-group">
+      <label for="sEmail">Email</label>
+      <input type="email" id="sEmail" placeholder="Enter your email">
+    </div>
+    <div class="form-group">
+      <label for="sPass">Password</label>
+      <input type="password" id="sPass" placeholder="Create a password">
+    </div>
+    <div class="form-group">
+      <label for="sRole">Role</label>
+      <select id="sRole">
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
+        <option value="staff">Staff</option>
+      </select>
+    </div>
+    <button onclick="signup()">Sign Up</button>
+    <div class="links">
+      <a onclick="showLogin()">Back to Sign In</a>
+    </div>
   </div>
 
-  <!-- Forgot -->
+  <!-- Forgot Password Form -->
   <div id="forgotBox" class="hidden">
-    <input id="fName" placeholder="Name">
-    <input id="fId" placeholder="ID No">
-    <button onclick="forgot()">Recover</button>
-    <p onclick="showLogin()">Back to Login</p>
+    <h2>Recover Password</h2>
+    <div class="form-group">
+      <label for="fName">Full Name</label>
+      <input type="text" id="fName" placeholder="Enter your name">
+    </div>
+    <div class="form-group">
+      <label for="fId">ID Number</label>
+      <input type="text" id="fId" placeholder="Enter your ID">
+    </div>
+    <button onclick="forgot()">Recover Password</button>
+    <div class="links">
+      <a onclick="showLogin()">Back to Sign In</a>
+    </div>
   </div>
 </div>
 
-<script src="js/auth.js"></script>
+<div class="footer">
+  Copyright © 2026 IEMS. All rights reserved.
+</div>
+
+<script>
+// ========== INITIALIZE DATA ==========
+function initializeSystem() {
+  // Initialize users if not exists
+  if (!localStorage.getItem('users')) {
+    const defaultUsers = [
+      {
+        name: "John Student",
+        id: "ST001",
+        phone: "1234567890",
+        email: "john@student.com",
+        pass: "123",
+        role: "student"
+      },
+      {
+        name: "Jane Teacher",
+        id: "TC001",
+        phone: "0987654321",
+        email: "jane@teacher.com",
+        pass: "123",
+        role: "teacher"
+      },
+      {
+        name: "Admin Staff",
+        id: "AD001",
+        phone: "5555555555",
+        email: "admin@staff.com",
+        pass: "123",
+        role: "staff"
+      }
+    ];
+    localStorage.setItem('users', JSON.stringify(defaultUsers));
+  }
+  
+  // Initialize system data if not exists
+  if (!localStorage.getItem('systemData')) {
+    const systemData = {
+      studentData: {
+        "ST001": {
+          attendance: { "2024-01": "95%", "2024-02": "90%" },
+          marks: {
+            "Web Development": { mid: 85, final: 90, assignment: 80 },
+            "Database Management": { mid: 78, final: 85, assignment: 75 },
+            "Software Engineering": { mid: 92, final: 95, assignment: 90 }
+          },
+          cgpa: "3.75",
+          courses: ["Web Development", "Database Management", "Software Engineering"],
+          routine: "Sunday to Thursday: 9:00 AM - 5:00 PM",
+          exams: "Midterm: October 15, 2024 | Final: December 20, 2024",
+          notices: [
+            "Class starts at 9:00 AM sharp",
+            "Assignment submission deadline: January 25, 2024"
+          ]
+        }
+      },
+      teacherData: {
+        "TC001": {
+          classes: ["Web Development - Section A", "Database Management - Section B"],
+          students: [
+            { id: "ST001", name: "John Student" },
+            { id: "ST002", name: "Jane Smith" },
+            { id: "ST003", name: "Mike Johnson" }
+          ]
+        }
+      },
+      staffData: {
+        users: [],
+        notices: []
+      }
+    };
+    localStorage.setItem('systemData', JSON.stringify(systemData));
+  }
+}
+
+// Initialize on page load
+initializeSystem();
+
+// ========== FORM SWITCHING ==========
+const loginBox = document.getElementById("loginBox");
+const signupBox = document.getElementById("signupBox");
+const forgotBox = document.getElementById("forgotBox");
+
+function hideAll() {
+  loginBox.classList.add("hidden");
+  signupBox.classList.add("hidden");
+  forgotBox.classList.add("hidden");
+}
+
+function showLogin() {
+  hideAll();
+  loginBox.classList.remove("hidden");
+}
+
+function showSignup() {
+  hideAll();
+  signupBox.classList.remove("hidden");
+}
+
+function showForgot() {
+  hideAll();
+  forgotBox.classList.remove("hidden");
+}
+
+// ========== SIGNUP FUNCTION ==========
+function signup() {
+  // Get input values
+  const name = document.getElementById('sName').value;
+  const id = document.getElementById('sId').value;
+  const phone = document.getElementById('sPhone').value;
+  const email = document.getElementById('sEmail').value;
+  const password = document.getElementById('sPass').value;
+  const role = document.getElementById('sRole').value;
+
+  // Validate inputs
+  if (!name || !id || !phone || !email || !password) {
+    alert("Please fill in all fields");
+    return;
+  }
+
+  // Get existing users
+  const users = JSON.parse(localStorage.getItem('users'));
+  
+  // Check if user already exists
+  if (users.some(user => user.id === id)) {
+    alert("User with this ID already exists");
+    return;
+  }
+
+  // Create new user object
+  const newUser = {
+    name: name,
+    id: id,
+    phone: phone,
+    email: email,
+    pass: password,
+    role: role
+  };
+
+  // Add to users array
+  users.push(newUser);
+  
+  // Save to localStorage
+  localStorage.setItem('users', JSON.stringify(users));
+  
+  // If student, create student data
+  if (role === 'student') {
+    const systemData = JSON.parse(localStorage.getItem('systemData'));
+    
+    // Initialize student data
+    systemData.studentData[id] = {
+      attendance: {},
+      marks: {},
+      cgpa: "0.00",
+      courses: ["Web Development", "Database Management", "Software Engineering"],
+      routine: "Sunday to Thursday: 9:00 AM - 5:00 PM",
+      exams: "Midterm: October 15, 2024 | Final: December 20, 2024",
+      notices: [
+        "Welcome to IEMS!",
+        "Check your class schedule regularly"
+      ]
+    };
+    
+    // Save system data
+    localStorage.setItem('systemData', JSON.stringify(systemData));
+  }
+  
+  // Show success message
+  alert("Signup successful! Please login with your credentials.");
+  
+  // Clear form and show login
+  document.getElementById('sName').value = '';
+  document.getElementById('sId').value = '';
+  document.getElementById('sPhone').value = '';
+  document.getElementById('sEmail').value = '';
+  document.getElementById('sPass').value = '';
+  
+  showLogin();
+}
+
+// ========== LOGIN FUNCTION ==========
+function login() {
+  // Get input values
+  const id = document.getElementById('loginId').value;
+  const password = document.getElementById('loginPass').value;
+  const role = document.getElementById('loginRole').value;
+
+  // Validate inputs
+  if (!id || !password) {
+    alert("Please enter both ID and password");
+    return;
+  }
+
+  // Get users from localStorage
+  const users = JSON.parse(localStorage.getItem('users'));
+  
+  // Find matching user
+  const user = users.find(u => 
+    u.id === id && 
+    u.pass === password && 
+    u.role === role
+  );
+
+  if (!user) {
+    alert("Invalid credentials or role. Please try again.");
+    return;
+  }
+
+  // Store current user in localStorage
+  localStorage.setItem('currentUser', JSON.stringify(user));
+  
+  // Redirect to dashboard
+  window.location.href = "dashboard.html";
+}
+
+// ========== FORGOT PASSWORD FUNCTION ==========
+function forgot() {
+  const name = document.getElementById('fName').value;
+  const id = document.getElementById('fId').value;
+
+  if (!name || !id) {
+    alert("Please fill in all fields");
+    return;
+  }
+
+  // Get users from localStorage
+  const users = JSON.parse(localStorage.getItem('users'));
+  
+  // Find matching user
+  const user = users.find(u => u.id === id && u.name === name);
+  
+  if (user) {
+    alert("Password recovery initiated! In a real system, a recovery email would be sent to your registered email.");
+  } else {
+    alert("No user found with the provided name and ID.");
+  }
+}
+</script>
 </body>
 </html>
